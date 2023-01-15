@@ -23,18 +23,18 @@ public class EmployeeCrud {
             final int LOWER_OPTION = 1;
             final int UPPER_OPTION = 4;
 
+
             while (true) {
                 printMenu();
-                int inputMenuOption = validateInt(sc);
-
-                if (inputMenuOption == EXIT_OPTION) {
+                int menuOption = validateInt(sc);
+                if (menuOption == EXIT_OPTION) {
                     break;
-                } else if (inputMenuOption < LOWER_OPTION || inputMenuOption > UPPER_OPTION) {
+                } else if (menuOption < LOWER_OPTION || menuOption > UPPER_OPTION) {
                     System.out.println("ERROR! Enter a valid option from the menu.");
                     continue;
                 }
 
-                switch (inputMenuOption) {
+                switch (menuOption) {
                     case 1:
                         System.out.println("Add");
                         break;
@@ -49,6 +49,7 @@ public class EmployeeCrud {
                         break;
                 }
             }
+
             System.out.println("------> End of Program");
 
         } catch (SQLException e) {
@@ -75,7 +76,7 @@ public class EmployeeCrud {
      * Prints the menu options for the user
      */
     private static void printMenu() {
-        String menu = "    --------------->> MENU <<---------------- \n" +
+        String menu = "    ----------------- MENU ------------------ \n" +
                 "    1. Add employees to the company.\n" +
                 "    2. Consult data of one, or all employees.\n" +
                 "    3. Update the information of an employee.\n" +
@@ -106,5 +107,4 @@ public class EmployeeCrud {
         }
         return value;
     }
-
 }
