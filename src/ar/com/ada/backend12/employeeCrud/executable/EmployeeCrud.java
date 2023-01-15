@@ -1,5 +1,8 @@
 package ar.com.ada.backend12.employeeCrud.executable;
 
+import ar.com.ada.backend12.employeeCrud.Util.Validations;
+import ar.com.ada.backend12.employeeCrud.model.Menu;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -14,19 +17,22 @@ public class EmployeeCrud {
         PreparedStatement stmt = null;
 
         try {
-            System.out.println("\n===================== EMPLOYEE MANAGEMENT SYSTEM ======================\n");
             //1 - Connect to the database.
             conn = DriverManager.getConnection(URL, USER, PASS);
 
             // Program
+            System.out.println("\n===================== EMPLOYEE MANAGEMENT SYSTEM ======================\n");
+            Menu menu = new Menu();
+            Validations validation = new Validations();
+
             final int EXIT_OPTION = 5;
             final int LOWER_OPTION = 1;
             final int UPPER_OPTION = 4;
 
-
             while (true) {
-                printMenu();
-                int menuOption = validateInt(sc);
+                menu.printMenu();
+                int menuOption = validation.validateInt(sc);
+
                 if (menuOption == EXIT_OPTION) {
                     break;
                 } else if (menuOption < LOWER_OPTION || menuOption > UPPER_OPTION) {
@@ -49,14 +55,13 @@ public class EmployeeCrud {
                         break;
                 }
             }
-
             System.out.println("------> End of Program");
 
         } catch (SQLException e) {
             System.out.println("EXCEPTION! An error has occurred in the program. Execution is aborted");
             e.printStackTrace();
         } finally {
-            //5 - Close the connection to the database
+            //5 - Close database connection
             if (conn != null) {
                 try {
                     conn.close();
@@ -68,43 +73,5 @@ public class EmployeeCrud {
         // Close Scanner
         sc.close();
         System.out.println("======================================================================= \n");
-    }
-
-    // --------------------------------------- STATIC FUNCTIONS ---------------------------------------
-
-    /**
-     * Prints the menu options for the user
-     */
-    private static void printMenu() {
-        String menu = "    ----------------- MENU ------------------ \n" +
-                "    1. Add employees to the company.\n" +
-                "    2. Consult data of one, or all employees.\n" +
-                "    3. Update the information of an employee.\n" +
-                "    4. Delete an employee.\n" +
-                "    5. Exit.\n" +
-                "    ----------------------------------------- \n";
-        System.out.println(menu);
-        System.out.print("Select a menu option: ");
-    }
-
-    /**
-     * Validates if the value entered by the user is a number.
-     *
-     * @param sc - An object of type Scanner, to read the user's data.
-     * @return value - If the value entered is a number, It RETURNS this NUMBER.
-     * Else, RETURN an error message.
-     */
-    static int validateInt(Scanner sc) {
-        Integer value = null;
-
-        while (value == null) {
-            try {
-                value = Integer.parseInt(sc.nextLine());
-            } catch (Exception ex) {
-                System.out.println("ERROR! Enter a numerical value from the menu.");
-                printMenu();
-            }
-        }
-        return value;
     }
 }
