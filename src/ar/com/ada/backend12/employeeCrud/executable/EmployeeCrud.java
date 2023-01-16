@@ -2,10 +2,7 @@ package ar.com.ada.backend12.employeeCrud.executable;
 
 import ar.com.ada.backend12.employeeCrud.Utils.Util;
 import ar.com.ada.backend12.employeeCrud.Utils.Validations;
-import ar.com.ada.backend12.employeeCrud.model.CompanyEmployees;
-import ar.com.ada.backend12.employeeCrud.model.Employee;
-import ar.com.ada.backend12.employeeCrud.model.HandlerOptions;
-import ar.com.ada.backend12.employeeCrud.model.Menu;
+import ar.com.ada.backend12.employeeCrud.model.*;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -31,6 +28,7 @@ public class EmployeeCrud {
             Validations validation = new Validations();
             CompanyEmployees companyEmployees = new CompanyEmployees();
             HandlerOptions handlerOptions = new HandlerOptions();
+            RequestData r = new RequestData();
 
             final int EXIT_OPTION = 5;
             final int LOWER_OPTION = 1;
@@ -48,6 +46,7 @@ public class EmployeeCrud {
                     continue;
                 }
 
+                String action;
                 int id;
                 String firstName;
                 String lastName;
@@ -60,22 +59,15 @@ public class EmployeeCrud {
                 switch (menuOption) {
                     case 1:
                         System.out.println("\n ------> Option 1 - Add employees");
-
                         // Request for necessary data for the query
-                        System.out.print("Enter employee Name: ");
-                        firstName = sc.nextLine();
-                        System.out.print("Enter employee Last Name: ");
-                        lastName = sc.nextLine();
-                        System.out.print("Enter employee DI [00.000.000]: ");
-                        di = sc.nextLine();
-                        System.out.print("Enter employee Date of Birth [yyyy-mm-dd]: ");
-                        birthString = sc.nextLine();
-                        birthDate = util.parseDate(birthString);
+                        action = "Insert";
+                        firstName = r.requestName(action);
+                        lastName = r.requestLastName(action);
+                        di = r.requestDi(action);
+                        birthDate = r.requestBirthDate(action);
                         menu.printDepartmentMenu();
-                        System.out.print("Enter a employee Department: ");
-                        department = sc.nextInt();
-                        System.out.print("Enter employee Salary [ex. 5000]: ");
-                        salary = sc.nextInt();
+                        department = r.requestDepartment(action);
+                        salary = r.requestSalary(action);
 
                         // Add employee in database and get employeeId
                         Integer newEmployeeId = handlerOptions.insertEmployee(conn, firstName, lastName, di, birthDate, department, salary);
@@ -90,6 +82,8 @@ public class EmployeeCrud {
                             handlerOptions.printAnEmployee(conn, newEmployeeId);
                             System.out.println("\nEmployee successfully entered into the system.");
                             System.out.println(" ------>");
+                        //} TODO --> doesnt work else {
+                          // System.out.println("\nERROR!, The user could not be Inserted");
                         }
                         break;
 
@@ -107,68 +101,72 @@ public class EmployeeCrud {
                                 System.out.println("\n All employees have been printed.\n" +
                                         " ---> ");
                                 break;
-                            default:
-                                System.out.println("Please enter a valid option");
-                                break;
                             case "B":
                             case "b":
                                 // Request for necessary data for the query
-                                System.out.print("Enter the ID of the user to consult. [ex. 2]: ");
-                                id = sc.nextInt();
-                                handlerOptions.printAnEmployee(conn, id);
+                                action = "Select";
+                                id = r.requestId(action);
+                                int successSelect = handlerOptions.printAnEmployee(conn, id);
+
+                                if(successSelect > 0) {
+                                    System.out.println("\n The employee has been printed successfully.\n");
+                                } //TODO --> doesnt work else {
+                                  //  System.out.println("ERROR! The user does not exist or some other error occurred at the time of printing");
+                                  //}
                                 System.out.println("\n ------>");
+                                break;
+                            default:
+                                System.out.println("Please enter a valid option");
                                 break;
                         }
                         break;
 
                     case 3:
                         System.out.println("\n ------> Option 3 - Update employees");
-
                         // Request for necessary data for the query
-                        System.out.print("Enter the ID of the user to Update. [ex. 2]: ");
-                        id = sc.nextInt();
-
-                        System.out.print("Enter employee Name: ");
-                        firstName = sc.next();
-                        System.out.print("Enter employee Last Name: ");
-                        lastName = sc.next();
-                        System.out.print("Enter employee DI [00.000.000]: ");
-                        di = sc.next();
-                        System.out.print("Enter employee Date of Birth [yyyy-mm-dd]: ");
-                        birthString = sc.next();
-                        birthDate = util.parseDate(birthString);
+                        action = "Update";
+                        id = r.requestId(action);
+                        firstName = r.requestNameOneWorld(action);
+                        lastName = r.requestLastNameOneWorld(action);
+                        di = r.requestDiOneWorld(action);
+                        birthDate = r.requestBirthDateOneWorld(action);
                         menu.printDepartmentMenu();
-                        System.out.print("Enter a employee Department: ");
-                        department = sc.nextInt();
-                        System.out.print("Enter employee Salary [ex. 5000]: ");
-                        salary = sc.nextInt();
+                        department = r.requestDepartment(action);
+                        salary = r.requestSalary(action);
 
                         System.out.println("Updating employee...");
                         int successUpdate = handlerOptions.updateEmployee(conn, firstName, lastName, di, birthDate, department, salary, id);
+                        if(successUpdate > 0) {
+                            handlerOptions.printAnEmployee(conn, id);
+                            System.out.println("\nEmployee successfully Updated into the system.");
 
-                        // Update company set - TO DO--> DOESN'T WORK!!
-//                        if(successUpdate > 0) {
+                        // TODO--> DOESN'T WORK!! Update company set -
 //                            System.out.println(companyEmployees.updateEmployee(id, firstName, lastName, di, birthDate, department, salary));
-//                        }
-                        handlerOptions.printAnEmployee(conn, id);
-                        System.out.println("\nUpdate successfully");
+                        //TODO --> doesnt work} else {
+                            //System.out.println("\nERROR!, The user could not be Updated");
+                            }
+
                         System.out.println(" ------>\n");
                         break;
+
                     case 4:
                         System.out.println("\n ------> Option 4 - Delete employees");
 
                         // Request for necessary data for the query
-                        System.out.print("Enter the ID of the user to Update. [ex. 2]: ");
-                        id = sc.nextInt();
+                        action = "Delete";
+                        id = r.requestId(action);
+
+                        System.out.println("Deleting employee...");
+                        handlerOptions.printAnEmployee(conn, id);
 
                         int successDelete = handlerOptions.deleteEmployee(conn, id);
-
-                        // TODO --> See if it works, it should remove employees from the TreeMap
-//                        if(successDelete > 0) {
+                        if(successDelete > 0) {
+                            System.out.println("\nEmployee successfully Deleted from the system.");
+                            // TODO --> See if it works, it should remove employees from the TreeMap
 //                            companyEmployees.delete(id);
-//                        }
-
-                        System.out.println("Delete");
+                        //TODO --> doesnt work } else {
+                         //   System.out.println("\nERROR!, The user could not be Deleted");
+                        }
                         break;
                 }
             }
