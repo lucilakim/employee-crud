@@ -95,7 +95,11 @@ public class EmployeeCrud {
 
                     case 2:
                         System.out.println("\n ------> Option 2 - Consult employees");
-
+                        // Request for necessary data for the query
+                        System.out.print("Enter the ID of the user to consult. [ex. 2]: ");
+                        id = sc.nextInt();
+                        handlerOptions.printEmployee(conn, id);
+                        System.out.println("\n ------>");
                         break;
                     case 3:
                         System.out.println("Update");
