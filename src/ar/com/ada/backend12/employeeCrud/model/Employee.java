@@ -9,14 +9,14 @@ public class Employee {
     int id;
     String firstName;
     String lastName;
-    int di;
+    String di;
     Date birthDate;
-    String department;
+    int department;
     Timestamp hiringDate;
     int salary;
 
     // Constructor
-    public Employee(int id, String firstName, String lastName, int di, Date birthDate, String department, Timestamp hiringDate, int salary) {
+    public Employee(int id, String firstName, String lastName, String di, Date birthDate, int department, Timestamp hiringDate, int salary) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,11 +52,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public int getDi() {
+    public String getDi() {
         return di;
     }
 
-    public void setDi(int di) {
+    public void setDi(String di) {
         this.di = di;
     }
 
@@ -68,11 +68,11 @@ public class Employee {
         this.birthDate = birthDate;
     }
 
-    public String getDepartment() {
+    public int getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(int department) {
         this.department = department;
     }
 
