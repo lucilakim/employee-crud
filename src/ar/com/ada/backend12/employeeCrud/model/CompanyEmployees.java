@@ -46,4 +46,15 @@ public class CompanyEmployees {
 
         return out;
     }
+
+
+    public void printEmployees() {
+        List<Employee> out = new ArrayList<>();
+
+        Iterator<Integer> i = employees.keySet().iterator();
+
+        while(i.hasNext()) {
+            System.out.println(employees.get(i));
+        }
+    }
 }

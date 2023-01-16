@@ -144,7 +144,7 @@ public class EmployeeCrud {
                         salary = sc.nextInt();
 
                         System.out.println("Updating employee...");
-                        int successUpdate = handlerOptions.updateEmployee(conn, firstName, lastName, di, birthDate, department, salary,id);
+                        int successUpdate = handlerOptions.updateEmployee(conn, firstName, lastName, di, birthDate, department, salary, id);
 
                         // Update company set - TO DO--> DOESN'T WORK!!
 //                        if(successUpdate > 0) {
@@ -155,6 +155,19 @@ public class EmployeeCrud {
                         System.out.println(" ------>\n");
                         break;
                     case 4:
+                        System.out.println("\n ------> Option 4 - Delete employees");
+
+                        // Request for necessary data for the query
+                        System.out.print("Enter the ID of the user to Update. [ex. 2]: ");
+                        id = sc.nextInt();
+
+                        int successDelete = handlerOptions.deleteEmployee(conn, id);
+
+                        // TODO --> See if it works, it should remove employees from the TreeMap
+//                        if(successDelete > 0) {
+//                            companyEmployees.delete(id);
+//                        }
+
                         System.out.println("Delete");
                         break;
                 }
