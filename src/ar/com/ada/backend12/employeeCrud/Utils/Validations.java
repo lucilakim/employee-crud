@@ -27,6 +27,7 @@ public class Validations {
                 System.out.println(value);
                 System.out.println("ERROR! Enter a numerical value from the menu.");
                 menu.printMenu();
+                System.out.print("Select a menu option: ");
             }
         }
 
