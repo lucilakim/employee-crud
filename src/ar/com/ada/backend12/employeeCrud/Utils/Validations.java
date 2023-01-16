@@ -1,15 +1,14 @@
-package ar.com.ada.backend12.employeeCrud.Util;
+package ar.com.ada.backend12.employeeCrud.Utils;
 
 import ar.com.ada.backend12.employeeCrud.model.Menu;
 
 import java.util.Scanner;
 
 public class Validations {
+    Menu menu = new Menu();
 
     public Validations() {
     }
-
-    Menu menu = new Menu();
 
     /**
      * Validates if the value entered by the user is a number.
