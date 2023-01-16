@@ -128,6 +128,21 @@ public class Employee {
         this.salary = salary;
     }
 
+    public int updateEmployee(int id, String firstName, String lastName, String di, Date birthDate, int departmentId, int salary){
+        try {
+            this.id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.di = di;
+            this.birthDate = birthDate;
+            setDepartment(departmentId);
+            this.salary = salary;
+            return 1;
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
     // Equals - HashCode - ToString
     @Override
     public boolean equals(Object o) {

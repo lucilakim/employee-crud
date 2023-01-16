@@ -122,7 +122,37 @@ public class EmployeeCrud {
                         break;
 
                     case 3:
-                        System.out.println("Update");
+                        System.out.println("\n ------> Option 3 - Update employees");
+
+                        // Request for necessary data for the query
+                        System.out.print("Enter the ID of the user to Update. [ex. 2]: ");
+                        id = sc.nextInt();
+
+                        System.out.print("Enter employee Name: ");
+                        firstName = sc.next();
+                        System.out.print("Enter employee Last Name: ");
+                        lastName = sc.next();
+                        System.out.print("Enter employee DI [00.000.000]: ");
+                        di = sc.next();
+                        System.out.print("Enter employee Date of Birth [yyyy-mm-dd]: ");
+                        birthString = sc.next();
+                        birthDate = util.parseDate(birthString);
+                        menu.printDepartmentMenu();
+                        System.out.print("Enter a employee Department: ");
+                        department = sc.nextInt();
+                        System.out.print("Enter employee Salary [ex. 5000]: ");
+                        salary = sc.nextInt();
+
+                        System.out.println("Updating employee...");
+                        int successUpdate = handlerOptions.updateEmployee(conn, firstName, lastName, di, birthDate, department, salary,id);
+
+                        // Update company set - TO DO--> DOESN'T WORK!!
+//                        if(successUpdate > 0) {
+//                            System.out.println(companyEmployees.updateEmployee(id, firstName, lastName, di, birthDate, department, salary));
+//                        }
+                        handlerOptions.printAnEmployee(conn, id);
+                        System.out.println("\nUpdate successfully");
+                        System.out.println(" ------>\n");
                         break;
                     case 4:
                         System.out.println("Delete");
