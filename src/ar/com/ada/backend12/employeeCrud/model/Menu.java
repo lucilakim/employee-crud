@@ -17,6 +17,5 @@ public class Menu {
                 "    5. Exit.\n" +
                 "    ----------------------------------------- \n";
         System.out.println(menu);
-        System.out.print("Select a menu option: ");
     }
 }
