@@ -85,7 +85,7 @@ public class HandlerOptions {
         if (stmt != null) { try { stmt.close();} catch (SQLException f) { f.printStackTrace(); }}
     }
 
-    public int updateEmployee(Connection conn, String firstName, String lastName, String di, java.util.Date birthDate, int department, int salary, int id) throws SQLException {
+    public int updateEmployee(Connection conn, String firstName, String lastName, String di, java.util.Date birthDate, int department, int salary, int id) {
         //2 - Prepare our query, be it select, delete, etc.
         String sql = "UPDATE EMPLOYEE SET FIRST_NAME = ?, LAST_NAME = ? , DI = ?, BIRTH_DATE = ?, DEPARTMENT = ?, SALARY = ? WHERE ID = ?";
         PreparedStatement stmt = null;
@@ -105,10 +105,31 @@ public class HandlerOptions {
 
         } catch (SQLException e) {
             System.out.println("ERROR! An error occurred while trying to update the user.");
+            e.printStackTrace();
         return -1;
 
     } finally {
         if (stmt != null) { try { stmt.close();} catch (SQLException f) { f.printStackTrace(); }}
     }
+    }
+
+    public int deleteEmployee(Connection conn, int id) {
+        //2 - Prepare our query, be it select, delete, etc.
+        String sql = "DELETE FROM EMPLOYEE WHERE ID = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            //3 - Execute our query
+            stmt.executeUpdate();
+            return 1;
+        } catch (SQLException e) {
+            System.out.println("ERROR! An error occurred while trying to delete the user.");
+            e.printStackTrace();
+            return -1;
+        } finally {
+            if (stmt != null) { try { stmt.close();} catch (SQLException f) { f.printStackTrace(); }}
+        }
     }
 }
