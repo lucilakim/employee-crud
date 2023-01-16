@@ -12,6 +12,11 @@ public class Util {
     public Util() {
     }
 
+    /**
+     * Converts a String to a Date.
+     * @param s The string to be converted to Date
+     * @return If it was possible to parse it RETURN a DATE, if it was not possible to parse it RETURN NULL.
+     */
     public Date parseDate(String s) {
         Date date = null;
         try {
