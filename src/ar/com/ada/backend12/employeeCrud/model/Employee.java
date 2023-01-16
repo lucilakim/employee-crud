@@ -11,19 +11,17 @@ public class Employee {
     String lastName;
     String di;
     Date birthDate;
-    int department;
-    Timestamp hiringDate;
+    Department department;
     int salary;
 
     // Constructor
-    public Employee(int id, String firstName, String lastName, String di, Date birthDate, int department, Timestamp hiringDate, int salary) {
+    public Employee(int id, String firstName, String lastName, String di, Date birthDate, int departmentId, int salary) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.di = di;
         this.birthDate = birthDate;
-        this.department = department;
-        this.hiringDate = hiringDate;
+        setDepartment(departmentId);
         this.salary = salary;
     }
 
@@ -68,20 +66,58 @@ public class Employee {
         this.birthDate = birthDate;
     }
 
-    public int getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(int department) {
-        this.department = department;
-    }
-
-    public Timestamp getHiringDate() {
-        return hiringDate;
-    }
-
-    public void setHiringDate(Timestamp hiringDate) {
-        this.hiringDate = hiringDate;
+    public void setDepartment(int departmentId) {
+        switch (departmentId) {
+            case 1:
+                this.department = Department.SYSTEMS;
+                break;
+            case 2:
+                this.department = Department.HUMAN_RESOURCES;
+                break;
+            case 3:
+                this.department = Department.ACCOUNTING;
+                break;
+            case 4:
+                this.department = Department.CUSTOMER_SERVICE;
+                break;
+            case 5:
+                this.department = Department.PROJECT_MANAGER;
+                break;
+            case 6:
+                this.department = Department.UX_DESIGNER;
+                break;
+            case 7:
+                this.department = Department.UI_DESIGNER;
+                break;
+            case 8:
+                this.department = Department.BUSINESS_ANALYST;
+                break;
+            case 9:
+                this.department = Department.BACKEND_DEVELOPER;
+                break;
+            case 10:
+                this.department = Department.FRONTED_DEVELOPER;
+                break;
+            case 11:
+                this.department = Department.TESTER_QA;
+                break;
+            case 12:
+                this.department = Department.DATA_ANALYST;
+                break;
+            case 13:
+                this.department = Department.TEAM_LEAD;
+                break;
+            case 14:
+                this.department = Department.TEACH_LEAD;
+                break;
+            case 15:
+                this.department = Department.SCRUM_MASTER;
+                break;
+        }
     }
 
     public int getSalary() {
@@ -98,12 +134,12 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id == employee.id && di == employee.di && salary == employee.salary && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(birthDate, employee.birthDate) && Objects.equals(department, employee.department) && Objects.equals(hiringDate, employee.hiringDate);
+        return id == employee.id && department == employee.department && salary == employee.salary && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(di, employee.di) && Objects.equals(birthDate, employee.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, di, birthDate, department, hiringDate, salary);
+        return Objects.hash(id, firstName, lastName, di, birthDate, department, salary);
     }
 
     @Override
@@ -115,7 +151,6 @@ public class Employee {
                 ", di=" + di +
                 ", birthDate=" + birthDate +
                 ", department='" + department + '\'' +
-                ", hiringDate=" + hiringDate +
                 ", salary=" + salary +
                 '}';
     }
