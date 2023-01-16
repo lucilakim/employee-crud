@@ -48,6 +48,7 @@ public class EmployeeCrud {
                     continue;
                 }
 
+                int id;
                 String firstName;
                 String lastName;
                 String di;
@@ -86,12 +87,15 @@ public class EmployeeCrud {
                             Employee newEmployee = new Employee(newEmployeeId, firstName, lastName, di, birthDate, department, salary);
                             companyEmployees.insert(newEmployee);
                             System.out.println("\nAdding employee...");
-                            System.out.println("Employee successfully entered into the system.");
+                            handlerOptions.printEmployee(conn, newEmployeeId);
+                            System.out.println("\nEmployee successfully entered into the system.");
+                            System.out.println(" ------>");
                         }
                         break;
 
                     case 2:
-                        System.out.println("Consult");
+                        System.out.println("\n ------> Option 2 - Consult employees");
+
                         break;
                     case 3:
                         System.out.println("Update");
