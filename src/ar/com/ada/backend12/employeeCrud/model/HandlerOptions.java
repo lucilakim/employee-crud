@@ -38,7 +38,31 @@ public class HandlerOptions {
         }
     }
 
-    public void printEmployee(Connection conn, int id) throws SQLException {
+    public void printAllEmployees(Connection conn) throws SQLException{
+        //2 - Prepare our query, be it select, delete, etc.
+        String sql = "SELECT * FROM EMPLOYEE";
+        Statement stmt = conn.createStatement();
+
+        //3 - Execute our query
+        ResultSet rs = stmt.executeQuery(sql);
+
+        //4 - Optional Process results of our query
+        System.out.println("\nID    Name    Last Name     DI      Bith_of_Date D_Id     Hiring_Date      Salary ");
+        while (rs.next()) {
+            int id = rs.getInt("ID");
+            String name = rs.getString("FIRST_NAME");
+            String lastName = rs.getString("LAST_NAME");
+            String di = rs.getString("DI");
+            Date birth = rs.getDate("BIRTH_DATE");
+            int department = rs.getInt("DEPARTMENT");
+            Timestamp hiringDate = rs.getTimestamp("HIRING_DATE");
+            int salary = rs.getInt("SALARY");
+            System.out.println(id + ", '" + name + "', '" + lastName + "', '" + di + "', '" + birth + "', " + department + ", '" + hiringDate + "', $" + salary + ";");
+        }
+        if (stmt != null) { try { stmt.close();} catch (SQLException f) { f.printStackTrace(); }}
+    }
+
+    public void printAnEmployee(Connection conn, int id) throws SQLException {
         //2 - Prepare our query, be it select, delete, etc.
         String sql = "SELECT ID, FIRST_NAME, LAST_NAME, DI, BIRTH_DATE, DEPARTMENT, HIRING_DATE, SALARY FROM EMPLOYEE WHERE ID =  + ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
