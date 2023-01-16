@@ -38,6 +38,13 @@ public class Menu {
                 "    15 - SCRUM_MASTER.\n" +
                 "    <<<";
         System.out.println(departmentMenu);
+    }
 
+    public void printSelectMenu() {
+        String printSelectMenu = " >>> SELECT OPTION TO PRINT \n" +
+                "    A - ALL THE EMPLOYEES \n" +
+                "    B - ONLY ONE EMPLOYEE \n" +
+                " <<<";
+        System.out.println(printSelectMenu);
     }
 }
