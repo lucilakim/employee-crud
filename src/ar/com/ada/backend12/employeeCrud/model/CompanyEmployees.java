@@ -22,6 +22,11 @@ public class CompanyEmployees {
         employees.remove(id);
     }
 
+    public boolean updateEmployee(int id, String firstName, String lastName, String di, Date birthDate, int departmentId, int salary) {
+        getEmployee(id).updateEmployee(id, firstName, lastName, di, birthDate, departmentId, salary);
+        return false;
+    }
+
     public boolean contains(int id) {
         return employees.containsKey(id);
     }
