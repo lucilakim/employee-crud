@@ -87,7 +87,7 @@ public class EmployeeCrud {
                             Employee newEmployee = new Employee(newEmployeeId, firstName, lastName, di, birthDate, department, salary);
                             companyEmployees.insert(newEmployee);
                             System.out.println("\nAdding employee...");
-                            handlerOptions.printEmployee(conn, newEmployeeId);
+                            handlerOptions.printAnEmployee(conn, newEmployeeId);
                             System.out.println("\nEmployee successfully entered into the system.");
                             System.out.println(" ------>");
                         }
@@ -95,12 +95,32 @@ public class EmployeeCrud {
 
                     case 2:
                         System.out.println("\n ------> Option 2 - Consult employees");
-                        // Request for necessary data for the query
-                        System.out.print("Enter the ID of the user to consult. [ex. 2]: ");
-                        id = sc.nextInt();
-                        handlerOptions.printEmployee(conn, id);
-                        System.out.println("\n ------>");
+                        menu.printSelectMenu();
+                        System.out.print("Select the print Option: ");
+                        String option = sc.next();
+                        switch (option) {
+                            case "A":
+                            case "a":
+                                System.out.println("\n ---> All employees\n" +
+                                        "Printing employees...");
+                                handlerOptions.printAllEmployees(conn);
+                                System.out.println("\n All employees have been printed.\n" +
+                                        " ---> ");
+                                break;
+                            default:
+                                System.out.println("Please enter a valid option");
+                                break;
+                            case "B":
+                            case "b":
+                                // Request for necessary data for the query
+                                System.out.print("Enter the ID of the user to consult. [ex. 2]: ");
+                                id = sc.nextInt();
+                                handlerOptions.printAnEmployee(conn, id);
+                                System.out.println("\n ------>");
+                                break;
+                        }
                         break;
+
                     case 3:
                         System.out.println("Update");
                         break;
