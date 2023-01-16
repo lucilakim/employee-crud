@@ -31,11 +31,17 @@ public class HandlerOptions {
         } catch (SQLException e) {
             return -1;
         } finally {
-            if (stmt != null) { try { stmt.close();} catch (SQLException f) { f.printStackTrace(); }}
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException f) {
+                    f.printStackTrace();
+                }
+            }
         }
     }
 
-    public void printAllEmployees(Connection conn) throws SQLException{
+    public void printAllEmployees(Connection conn) throws SQLException {
         //2 - Prepare our query, be it select, delete, etc.
         String sql = "SELECT * FROM EMPLOYEE";
         Statement stmt = conn.createStatement();
@@ -56,34 +62,60 @@ public class HandlerOptions {
             int salary = rs.getInt("SALARY");
             System.out.println(id + ", '" + name + "', '" + lastName + "', '" + di + "', '" + birth + "', " + department + ", '" + hiringDate + "', $" + salary + ";");
         }
-        if (stmt != null) { try { stmt.close();} catch (SQLException f) { f.printStackTrace(); }}
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+        }
     }
 
-    public void printAnEmployee(Connection conn, int id) throws SQLException {
+    public int printAnEmployee(Connection conn, int id) throws SQLException {
         //2 - Prepare our query, be it select, delete, etc.
         String sql = "SELECT ID, FIRST_NAME, LAST_NAME, DI, BIRTH_DATE, DEPARTMENT, HIRING_DATE, SALARY FROM EMPLOYEE WHERE ID =  + ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, id);
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
 
-        //3 - Execute our query
-        ResultSet rs = stmt.executeQuery();
+            //3 - Execute our query
+            ResultSet rs = stmt.executeQuery();
 
-        //4 - Optional Process results of our query
-        while (rs.next()) {
-            id = rs.getInt("ID");
-            String name = rs.getString("FIRST_NAME");
-            String lastName = rs.getString("LAST_NAME");
-            String di = rs.getString("DI");
-            Date birth = rs.getDate("BIRTH_DATE");
-            int department = rs.getInt("DEPARTMENT");
-            Timestamp hiringDate = rs.getTimestamp("HIRING_DATE");
-            int salary = rs.getInt("SALARY");
+            //4 - Optional Process results of our query
+            while (rs.next()) {
+                id = rs.getInt("ID");
+                String name = rs.getString("FIRST_NAME");
+                String lastName = rs.getString("LAST_NAME");
+                String di = rs.getString("DI");
+                Date birth = rs.getDate("BIRTH_DATE");
+                int department = rs.getInt("DEPARTMENT");
+                Timestamp hiringDate = rs.getTimestamp("HIRING_DATE");
+                int salary = rs.getInt("SALARY");
 
-            System.out.println("\nID    Name    Last Name     DI      Bith_of_Date D_Id     Hiring_Date      Salary ");
-            System.out.println(id + ", '" + name + "', '" + lastName + "', '" + di + "', '" + birth + "', " + department + ", '" + hiringDate + "', $" + salary + ";");
+                System.out.println("\nID    Name    Last Name     DI      Bith_of_Date D_Id     Hiring_Date      Salary ");
+                System.out.println(id + ", '" + name + "', '" + lastName + "', '" + di + "', '" + birth + "', " + department + ", '" + hiringDate + "', $" + salary + ";");
+            }
+            return 1;
+
+        } catch (SQLException e) {
+            System.out.println("ERROR! An error occurred while trying to update the user.");
+            e.printStackTrace();
+            return -1;
+
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException f) {
+                    f.printStackTrace();
+                }
+            }
         }
-        if (stmt != null) { try { stmt.close();} catch (SQLException f) { f.printStackTrace(); }}
     }
+
+
+
 
     public int updateEmployee(Connection conn, String firstName, String lastName, String di, java.util.Date birthDate, int department, int salary, int id) {
         //2 - Prepare our query, be it select, delete, etc.
